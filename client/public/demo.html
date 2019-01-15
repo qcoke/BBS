@@ -20,7 +20,8 @@
         method: 'get',
         success: function(res){
           // console.log('RequestP:', res);
-          resolve(res);
+          console.log('假设这是一个需要很长时间等待的请求');
+          setTimeout(resolve(res), 5000);
         },
         error: function(res){
           // console.log('ERROR:', res);
