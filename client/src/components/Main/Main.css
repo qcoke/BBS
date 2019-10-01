@@ -10,6 +10,7 @@
 /* 主要内容区 */
 .contain-list{
   flex: 1;
+  overflow: auto;
   min-height: 400px;
 }
 .footer{
