@@ -1,0 +1,17 @@
+.main-container{
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-title{
+  height: 65px;
+}
+/* 主要内容区 */
+.contain-list{
+  flex: 1;
+  min-height: 400px;
+}
+.footer{
+  height: 80px;
+}
