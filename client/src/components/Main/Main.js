@@ -15,14 +15,14 @@ class Main extends Component {
     super(props);
     this.state = {
       listItems:[
-        { key: '0', value: 'Photos', text: '就是可怜的肌肤阿拉山口将大幅拉升的' },
-        { key: '1', value: 'Work', text: '就是可怜的肌肤阿拉山口将大幅拉升的' },
-        { key: '2', value: 'Vacation', text: '阿克琉斯记得反馈啦技术的开发李建阿斯利康的肌肤脸上看对方' },
-        { key: '3', value: 'Tokyo', text: '阿克苏的肌肤卢卡斯就打开了飞机阿斯利康的肌肤卢卡斯觉得浪费空间上来的咖啡机' },
-        { key: '4', value: 'HK', text: '看见了卡技术的开发 i 欧文哦日 u 为儿女们，苏丹诺夫' },
-        { key: '5', value: 'Photos', text: '就是可怜的肌肤阿拉山口将大幅拉升的' },
-        { key: '6', value: 'Work', text: '就是可怜的肌肤阿拉山口将大幅拉升的' },
-        { key: '7', value: 'Vacation', text: '阿克琉斯记得反馈啦技术的开发李建阿斯利康的肌肤脸上看对方' }
+        { key: 1, nickname: '张三', value: 'Photos', text: '就是可怜的肌肤阿拉山口将大幅拉升的' },
+        { key: 2, nickname: '张三', value: 'Work', text: '就是可怜的肌肤阿拉山口将大幅拉升的' },
+        { key: 3, nickname: '张三', value: 'Vacation', text: '阿克琉斯记得反馈啦技术的开发李建阿斯利康的肌肤脸上看对方' },
+        { key: 4, nickname: '李四', value: 'Tokyo', text: '阿克苏的肌肤卢卡斯就打开了飞机阿斯利康的肌肤卢卡斯觉得浪费空间上来的咖啡机' },
+        { key: 5, nickname: '张三', value: 'HK', text: '看见了卡技术的开发 i 欧文哦日 u 为儿女们，苏丹诺夫' },
+        { key: 6, nickname: '李四', value: 'Photos', text: '就是可怜的肌肤阿拉山口将大幅拉升的' },
+        { key: 7, nickname: '张三', value: 'Work', text: '就是可怜的肌肤阿拉山口将大幅拉升的' },
+        { key: 8, nickname: '张三', value: 'Vacation', text: '阿克琉斯记得反馈啦技术的开发李建阿斯利康的肌肤脸上看对方' }
       ]
     }
   }
@@ -32,17 +32,17 @@ class Main extends Component {
     
     if (keyCode === 13) {
       let newArray = this.state.listItems;
-      let scrollHeight = document.querySelector(".contain-list").scrollHeight;
-      let lastChild = document.querySelector(".MuiListItem-root:last-child");
-
+      
       newArray.push({
         key: new Date().getTime(), 
+        nickname: '张三',
         value: new Date().getTime(), 
         text: val
       });
-      this.setState({listItems: newArray});
+      this.setState({listItems: this.state.listItems});
       event.target.value = "";
       setTimeout(() => {
+        // 在这里做一个动画效果比较好
         document.querySelector(".contain-list").scrollTop = 9999999;
       }, 500);
     }

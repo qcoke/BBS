@@ -17,7 +17,7 @@ class MsgList extends Component{
       <List>
         {listItems.map((item) => {
           return (
-            <ListItem key={item.key}>
+            <ListItem key={item.key} className={item.nickname === '张三' ? 'my-message' : 'people-message'}>
               <ListItemAvatar>
                 <Avatar>
                   <ImageIcon />

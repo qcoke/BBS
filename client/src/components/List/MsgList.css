@@ -3,7 +3,7 @@
   padding: 10px;
   max-width: 70%;
   border-radius: 5px;
-  background-color: #ddd;
+  background-color: rgb(201, 201, 201);
 }
 .nick-name{
   font-size: 12px;
@@ -13,4 +13,16 @@
   display: block;
   text-align: center;
   margin-right: 10px;
+}
+
+.my-message{
+  flex-direction: row-reverse;
+  text-align: right;
+}
+.my-message .MuiListItemText-root{
+  text-align: right;
+  margin-right: 20px;
+}
+.my-message .MuiListItemText-root .MuiTypography-root{
+  background-color: rgb(47, 228, 47);
 }
