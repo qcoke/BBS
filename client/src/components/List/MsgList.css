@@ -25,4 +25,5 @@
 }
 .my-message .MuiListItemText-root .MuiTypography-root{
   background-color: rgb(47, 228, 47);
+  text-align: left;
 }

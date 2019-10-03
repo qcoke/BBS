@@ -7,6 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import TextField from '@material-ui/core/TextField';
 import MsgList from "../List/MsgList.js";
+import Button from '@material-ui/core/Button';
 
 import './Main.css';
 
@@ -26,6 +27,12 @@ class Main extends Component {
       ]
     }
   }
+  /** 
+   * 输入文本的监听事件
+   * @method    enterText
+   * @params    {Object}    event     原生 JavaScript 事件对象
+   * @return    {void}
+   */
   enterText (event) {
     const val = event.target.value;
     const keyCode = event.which;
@@ -47,6 +54,7 @@ class Main extends Component {
       }, 500);
     }
   }
+  // 界面渲染
   render() {
     return (
       <React.Fragment>
@@ -56,9 +64,10 @@ class Main extends Component {
               <IconButton edge="start" color="inherit" aria-label="menu">
                 <MenuIcon />
               </IconButton>
-              <Typography variant="h6">
+              <Typography variant="h6" className="typo-title">
                 Hello 楽
               </Typography>
+              <Button color="inherit">在线人数：0</Button>
             </Toolbar>
           </AppBar>
           {/* 内容窗口 */}
@@ -69,9 +78,10 @@ class Main extends Component {
           <div className="footer">
             <TextField
               fullWidth
-              id="outlined-bare"
               placeholder="请输入您的内容"
-              margin="normal"
+              multiline
+              rows="1"
+              margin="none"
               variant="outlined"
               onKeyPress={(e) => {
                 this.enterText(e);

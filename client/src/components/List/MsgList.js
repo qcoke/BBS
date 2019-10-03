@@ -12,7 +12,6 @@ import "./MsgList.css";
 class MsgList extends Component{
   render() {
     let listItems = this.props.dataList;
-    console.log("listItems:",listItems);
     return (
       <List>
         {listItems.map((item) => {
@@ -33,28 +32,3 @@ class MsgList extends Component{
 }
 
 export default MsgList;
-
-/*export default function SimpleContainer() {
-  const classes = useStyles();
-  console.log("this.props:", this);
-  let listItems = []; 
-  
-  return (
-    <List>
-      {listItems.map((item) => {
-        return (
-          <ListItem>
-            <ListItemAvatar>
-              <Avatar className={classes.bigAvatar}>
-                <ImageIcon />
-              </Avatar>
-              <span className="nick-name">昵称</span>
-            </ListItemAvatar>
-            <ListItemText secondary={item.text} />
-          </ListItem>
-        )
-      })}
-    </List>
-  )
-}
-*/
