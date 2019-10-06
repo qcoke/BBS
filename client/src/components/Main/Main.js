@@ -6,8 +6,10 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import TextField from '@material-ui/core/TextField';
-import MsgList from "../List/MsgList.js";
 import Button from '@material-ui/core/Button';
+
+import MsgList from "../List/MsgList.js";
+import Login from "../Login/Login.js";
 
 import './Main.css';
 
@@ -15,6 +17,9 @@ class Main extends Component {
   constructor(props){
     super(props);
     this.state = {
+      // 是否现实登录框
+      showLogin: false,
+      // 数据列表
       listItems:[
         { key: 1, nickname: '张三', value: 'Photos', text: '就是可怜的肌肤阿拉山口将大幅拉升的' },
         { key: 2, nickname: '张三', value: 'Work', text: '就是可怜的肌肤阿拉山口将大幅拉升的' },
@@ -54,6 +59,11 @@ class Main extends Component {
       }, 500);
     }
   }
+  // 界面初始化
+  componentDidMount(){
+    // 如果没有 session 那就等于用户下线了，需要重新登陆一次。
+    this.refs['login'].handleShow();
+  }
   // 界面渲染
   render() {
     return (
@@ -70,11 +80,9 @@ class Main extends Component {
               <Button color="inherit">在线人数：0</Button>
             </Toolbar>
           </AppBar>
-          {/* 内容窗口 */}
           <div className="contain-list">
             <MsgList dataList={this.state.listItems}></MsgList>
           </div>
-          {/* 底部输入框 */}
           <div className="footer">
             <TextField
               fullWidth
@@ -89,6 +97,7 @@ class Main extends Component {
             />
           </div>
         </Container>
+        <Login ref="login"></Login>
       </React.Fragment>
     );
   }
