@@ -1,97 +1,108 @@
 import React, { Component } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import FormControl from '@material-ui/core/FormControl';
+import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
-import TextField from '@material-ui/core/TextField';
-import { Grid } from '@material-ui/core';
-
-const useStyles = makeStyles(theme => ({
-  formControl: {
-    margin: theme.spacing(3),
-  },
-}));
+import Avatar from '@material-ui/core/Avatar';
+import Grid from '@material-ui/core/Grid';
 
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      show: false,
-      value: '1',
-      nickname: '张三',
-      headImgStr: '',
-      headerArr: [
-        {key:'1',value:'/imgs/head_1.jpeg'},
-        {key:'2',value:'/imgs/head_2.jpeg'},
-        {key:'3',value:'/imgs/head_3.jpeg'},
-        {key:'4',value:'/imgs/head_4.jpeg'},
-        {key:'5',value:'/imgs/head_5.jpeg'},
-        {key:'6',value:'/imgs/head_6.jpeg'}
-      ]
+      openDialog: false,
+      showError: false,
+      headerValue: 'a',
+      nickName: "张三"
+    };
+  }
+  // 为什么要这样写才能正常被调用？？？
+  handleClose = () => {
+    this.setState({ openDialog: false });
+  }
+  handleOpen = () => {
+    this.setState({ openDialog: true });
+  }
+  handleChange = (event) => {
+    const val = event.target.value;
+    this.setState({ headerValue: val });
+  }
+  // 保存数据
+  saveData = () => {
+    if (this.state.nickName.length === 0) {
+      console.log("请输入昵称");
+      this.setState({ showError: true });
+    }else{
+      this.setState({ showError: false });
+      // 保存在用户本地
+      window.sessionStorage.setItem("nickName",this.state.nickName);
+      window.sessionStorage.setItem("headerValue",this.state.headerValue);
+      this.setState({ showError: false });
     }
   }
-  demo = () => {
-    alert('Login demo method caller');
-  }
-  handleClose = () => {
-    this.setState({ show: false });
-  }
-  handleShow = () => {
-    this.setState({ show: true });
-  }
-  handleChange = () => {
-    alert('handleChange');
-  }
+
   render() {
+    const headerArr = [
+      { key: 'a', value: '/imgs/head_1.jpeg' },
+      { key: 'b', value: '/imgs/head_2.jpeg' },
+      { key: 'c', value: '/imgs/head_3.jpeg' },
+      { key: 'd', value: '/imgs/head_4.jpeg' },
+      { key: 'f', value: '/imgs/head_6.jpeg' }
+    ]
     return (
-      <Dialog
-        open={this.state.show}
-        onClose={this.handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-        fullWidth={true}
-        maxWidth="lg"
-      >
-        <DialogTitle id="alert-dialog-title">{"请输入您的资料"}</DialogTitle>
-        <DialogContent>
-          <Grid>
+      <div>
+        <Dialog open={this.state.openDialog} aria-labelledby="form-dialog-title">
+          <DialogTitle id="form-dialog-title">初始设置</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              请选择您的头像.
+            </DialogContentText>
             <FormControl>
-              <RadioGroup label="头像" value={this.state.value}>
-                <FormControlLabel
-                  value="female"
-                  control={<Radio color="primary" />}
-                  label="Female"
-                  labelPlacement="start"
-                />
-              </RadioGroup>
+              <Grid container justify="center" alignItems="center">
+                {headerArr.map((item) => {
+                  return (
+                    <div key={item.key}>
+                      <Radio
+                        checked={this.state.headerValue === item.key}
+                        onChange={this.handleChange}
+                        value={item.key}
+                        name="radio-button-demo" />
+                      <Avatar alt="" src={item.value} />
+                    </div>
+                  )
+                })}
+              </Grid>
             </FormControl>
-          </Grid>
-          <Grid>
             <FormControl>
-              <TextField
-                label="昵称："
-                value={this.state.nickname}
+              <TextField 
+                required
+                error={this.state.showError}
+                label="昵称"
+                name="nickName"
+                ref="nickName"
+                defaultValue={this.state.nickName}
+                onChange={(event) => {
+                  this.setState({nickName:event.target.value})
+                }}
               />
             </FormControl>
-          </Grid>
-        </DialogContent>
-        <DialogActions>
-        <Button variant="contained">
-            取消
-          </Button>
-          <Button variant="contained" color="primary">
-            提交
-          </Button>
-        </DialogActions>
-      </Dialog>
-    );
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleClose}>
+              取消
+            </Button>
+            <Button color="primary" onClick={this.saveData}>
+              确定
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
+    )
   }
 }
 
