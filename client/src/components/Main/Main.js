@@ -14,7 +14,7 @@ import io from 'socket.io-client';
 
 import './Main.css';
 
-window.socket = io('http://127.0.0.1:3001');
+window.socket = io('/');
 
 class Main extends Component {
   constructor(props){
