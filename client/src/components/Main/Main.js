@@ -10,17 +10,14 @@ import Button from '@material-ui/core/Button';
 
 import MsgList from "../List/MsgList.js";
 import Login from "../Login/Login.js";
-import io from 'socket.io-client';
 
 import './Main.css';
-
-window.socket = io('/');
 
 class Main extends Component {
   constructor(props){
     super(props);
     this.state = {
-      // 用户数
+      // 用户数卡拉库姆，，，，，，tgghg
       userCount: 0,
       // 是否现实登录框
       showLogin: false,
@@ -64,22 +61,9 @@ class Main extends Component {
   }
   // 界面初始化
   componentDidMount(){
-    let _this = this;
     // 如果没有 session 那就等于用户下线了，需要重新登陆一次。
     this.refs['login'].handleOpen();
-    // 监听服务器的消息
-    window.socket.on('sendToClient', function(msg){
-      _this.addMessageToList(JSON.parse(msg));
-    });
-
-    // window.socket.on('addUserCount', function(msg){
-    //   console.log(this);
-    // });
-
-    // window.socket.on('subUserCount', function(msg){
-    //   let userCount = _this.state.userCount;
-    //   _this.setState({listItems: userCount--});
-    // });
+    
   }
   // 界面渲染
   render() {

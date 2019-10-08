@@ -2,3 +2,6 @@
 .components-login{
   color: #f00;
 }
+.dialog-login .MuiDialog-paperWidthSm{
+  width: 60%;
+}
