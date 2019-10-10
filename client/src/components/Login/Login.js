@@ -9,25 +9,24 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Radio from '@material-ui/core/Radio';
 import Avatar from '@material-ui/core/Avatar';
-import io from 'socket.io-client';
 
 import "./login.css";
-
-window.socket = io('/');
 
 class Login extends Component {
   constructor(props) {
     super(props);
+    // console.log(this.props,'0000000');
     this.state = {
       openDialog: false,
       showError: false,
-      headerValue: 'a',
+      headerValue: '1',
       nickName: ""
     };
   }
   // 为什么要这样写才能正常被调用？？？
   handleClose = () => {
     this.setState({ openDialog: false });
+    this.initSocket();
   }
   handleOpen = () => {
     this.setState({ openDialog: true });
@@ -36,12 +35,18 @@ class Login extends Component {
     const val = event.target.value;
     this.setState({ headerValue: val });
   }
+  /** 
+   * 初始化 socket 连接
+   * @method      initSocket
+   * @return      {void}
+   */
+  initSocket = () => {
+    this.props.initSocket();
+  }
   // 保存数据
   saveData = () => {
     let _this = this;
-
     if (this.state.nickName.length === 0) {
-      console.log("请输入昵称");
       this.setState({ showError: true });
     } else {
       this.setState({ showError: false });
@@ -49,32 +54,17 @@ class Login extends Component {
       window.sessionStorage.setItem("nickName", this.state.nickName);
       window.sessionStorage.setItem("headerValue", this.state.headerValue);
       this.handleClose();
-
-      console.log(io);
-      // 监听服务器的消息
-      window.socket.on('sendToClient', function(msg){
-        _this.addMessageToList(JSON.parse(msg));
-      });
-
-      window.socket.on('addUserCount', function(msg){
-        console.log('用户上线了');
-      });
-
-      window.socket.on('subUserCount', function(msg){
-        console.log('用户下线了');
-        let userCount = _this.state.userCount;
-        _this.setState({listItems: userCount--});
-      });
     }
   }
 
   render() {
     const headerArr = [
-      { key: 'a', value: '/imgs/head_1.jpeg' },
-      { key: 'b', value: '/imgs/head_2.jpeg' },
-      { key: 'c', value: '/imgs/head_3.jpeg' },
-      { key: 'd', value: '/imgs/head_4.jpeg' },
-      { key: 'f', value: '/imgs/head_6.jpeg' }
+      { key: '1', value: '/imgs/head_1.jpeg' },
+      { key: '2', value: '/imgs/head_2.jpeg' },
+      { key: '3', value: '/imgs/head_3.jpeg' },
+      { key: '4', value: '/imgs/head_4.jpeg' },
+      { key: '5', value: '/imgs/head_5.jpeg' },
+      { key: '6', value: '/imgs/head_6.jpeg' }
     ]
     return (
       <div>

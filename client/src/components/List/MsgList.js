@@ -8,8 +8,34 @@ import ImageIcon from '@material-ui/icons/Image';
 
 import "./MsgList.css";
 
-
-class MsgList extends Component{
+class MsgList extends Component {
+  constructor(props) {
+    super(props);
+  }
+  getHeader = (headerValue) => {
+    let str = '';
+    console.log('头像:',headerValue);
+    switch (headerValue) {
+      case "1":
+        str = '/imgs/head_1.jpeg';
+        break;
+      case "2":
+        str = '/imgs/head_2.jpeg';
+        break;
+      case "3":
+        str = '/imgs/head_3.jpeg';
+        break;
+      case "4":
+        str = '/imgs/head_4.jpeg';
+        break; 
+      case "5":
+        str = '/imgs/head_5.jpeg';
+        break;
+      default:
+        str = '/imgs/head_6.jpeg';
+    }
+    return str;
+  }
   render() {
     let listItems = this.props.dataList;
     return (
@@ -18,7 +44,7 @@ class MsgList extends Component{
           return (
             <ListItem key={item.key} className={item.nickname === window.sessionStorage.getItem("nickName") ? 'my-message' : 'people-message'}>
               <ListItemAvatar>
-                <Avatar>
+                <Avatar src={this.getHeader(item.headerValue)}>
                   <ImageIcon />
                 </Avatar>
               </ListItemAvatar>

@@ -1,3 +1,8 @@
+/**
+ * author:        liucan
+ * email:         33370733@qq.com
+ * description:   主界面，用于聚合登陆组件、发送消息组件
+ */
 import React, { Component } from 'react';
 import Container from '@material-ui/core/Container';
 import AppBar from '@material-ui/core/AppBar';
@@ -7,13 +12,16 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-
+import io from 'socket.io-client';
 import MsgList from "../List/MsgList.js";
 import Login from "../Login/Login.js";
 
 import './Main.css';
 
+window.socket = io('/');
+
 class Main extends Component {
+  // 初始化组件
   constructor(props){
     super(props);
     this.state = {
@@ -40,16 +48,27 @@ class Main extends Component {
       event.target.value = "";
     }
   }
+  /** 
+   * 发送消息
+   * @method      sendMessage
+   * @params      {String}    val     输入框中的值，发送之后给服务器发一条消息。
+   * @return      {void}
+   */
   sendMessage = (val) => {
     const MsgObj = {
       key: new Date().getTime(), 
+      headerValue: window.sessionStorage.getItem("headerValue"),
       nickname: window.sessionStorage.getItem("nickName"),
       text: val
     }
-    // this.addMessageToList(MsgObj);
-    // 发送一条到服务器
     window.socket.emit("sentToServer", JSON.stringify(MsgObj)); 
   }
+  /** 
+   * 添加消息到列表
+   * @method      addMessageToList
+   * @params      {Object}    MsgObject     消息对象
+   * @return      {void}
+   */
   addMessageToList = (MsgObject) => {
     let newArray = this.state.listItems;
     newArray.push(MsgObject);
@@ -59,13 +78,45 @@ class Main extends Component {
       document.querySelector(".contain-list").scrollTop = 9999999;
     }, 500);
   }
-  // 界面初始化
+  /** 
+   * 初始化 socket 连接
+   * @method      initSocket
+   * @return      {void}
+   */
+  initSocket = () => {
+    let _this = this;
+    window.socket.on('sendToClient', function(msg){
+      console.log('发送信息');
+      _this.addMessageToList(JSON.parse(msg));
+    });
+
+    window.socket.on('addUserCount', function(msg){
+      console.log('用户上线了');
+      let userCount = _this.state.userCount + 1;
+      _this.setState({userCount: userCount});
+    });
+
+    window.socket.on('subUserCount', function(msg){
+      console.log('用户下线了');
+      let userCount = _this.state.userCount - 1;
+      _this.setState({userCount: userCount < 0 ? 0 : userCount});
+    });
+    window.socket.emit("addUserCount", 1);
+  }
+  /** 
+   * 界面初始化
+   * @method      componentDidMount
+   * @return      {void}
+   */
   componentDidMount(){
     // 如果没有 session 那就等于用户下线了，需要重新登陆一次。
     this.refs['login'].handleOpen();
-    
   }
-  // 界面渲染
+  /** 
+   * 界面渲染
+   * @method      render
+   * @return      {void}
+   */
   render() {
     return (
       <React.Fragment>
@@ -98,7 +149,7 @@ class Main extends Component {
             />
           </div>
         </Container>
-        <Login ref="login"></Login>
+        <Login ref="login" initSocket={this.initSocket}></Login>
       </React.Fragment>
     );
   }
