@@ -9,9 +9,12 @@ import ImageIcon from '@material-ui/icons/Image';
 import "./MsgList.css";
 
 class MsgList extends Component {
-  // constructor(props) {
-  //   super(props);
-  // }
+  constructor(props) {
+    super(props);
+    this.state = {
+      nickname: window.sessionStorage.getItem("nickName")
+    }
+  }
   getHeader = (headerValue) => {
     let str = '';
     console.log('头像:',headerValue);
@@ -47,6 +50,7 @@ class MsgList extends Component {
                 <Avatar src={this.getHeader(item.headerValue)}>
                   <ImageIcon />
                 </Avatar>
+                <span class="nick-name">{this.state.nickname}</span>
               </ListItemAvatar>
               <ListItemText secondary={item.text} />
             </ListItem>

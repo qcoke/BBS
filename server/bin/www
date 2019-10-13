@@ -30,17 +30,23 @@ server.on('error', onError);
 server.on('listening', onListening);
 
 io.on('connection', function(socket){
+  addUserCount();
   // 推送
   socket.on('sentToServer', function(msg){
     io.emit('sendToClient', msg);
   });
   // 监听用户的下线动作
   socket.on('disconnect', function(){
-    // console.log('用户下线了');
-    io.emit('subUserCount', '用户下线了');
+    subUserCount();
   });
+});
+
+function addUserCount(){
   io.emit('addUserCount', '用户上线了');
-})
+}
+function subUserCount(){
+  io.emit('subUserCount', '用户下线了');
+}
 
 
 /**
