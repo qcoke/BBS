@@ -15,7 +15,6 @@ import "./login.css";
 class Login extends Component {
   constructor(props) {
     super(props);
-    // console.log(this.props,'0000000');
     this.state = {
       openDialog: false,
       showError: false,

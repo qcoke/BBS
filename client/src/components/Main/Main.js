@@ -73,8 +73,8 @@ class Main extends Component {
   addMessageToList = (MsgObject) => {
     let newArray = this.state.listItems;
     const options = {
-      dir: 'auto',
-      body: MsgObject.value,
+      // body: MsgObject.text,
+      body: '您有一条新的消息',
       requireInteraction: true
     }
 
