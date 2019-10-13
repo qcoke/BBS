@@ -15,6 +15,7 @@ import Button from '@material-ui/core/Button';
 import io from 'socket.io-client';
 import MsgList from "../List/MsgList.js";
 import Login from "../Login/Login.js";
+import Notice from "../../Notice";
 
 import './Main.css';
 
@@ -61,7 +62,7 @@ class Main extends Component {
       nickname: window.sessionStorage.getItem("nickName"),
       text: val
     }
-    window.socket.emit("sentToServer", JSON.stringify(MsgObj)); 
+    window.socket.emit("sentToServer", JSON.stringify(MsgObj));
   }
   /** 
    * 添加消息到列表
@@ -71,12 +72,21 @@ class Main extends Component {
    */
   addMessageToList = (MsgObject) => {
     let newArray = this.state.listItems;
+    const options = {
+      dir: 'auto',
+      body: MsgObject.value,
+      requireInteraction: true
+    }
+
     newArray.push(MsgObject);
     this.setState({listItems: newArray});
     setTimeout(() => {
       // 在这里做一个动画效果比较好
       document.querySelector(".contain-list").scrollTop = 9999999;
     }, 500);
+    // 桌面推送
+
+    Notice.show("Leebbs", options);
   }
   /** 
    * 初始化 socket 连接

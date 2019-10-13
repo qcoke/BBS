@@ -45,7 +45,6 @@ class Login extends Component {
   }
   // 保存数据
   saveData = () => {
-    let _this = this;
     if (this.state.nickName.length === 0) {
       this.setState({ showError: true });
     } else {

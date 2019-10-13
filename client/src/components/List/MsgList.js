@@ -9,9 +9,9 @@ import ImageIcon from '@material-ui/icons/Image';
 import "./MsgList.css";
 
 class MsgList extends Component {
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
   getHeader = (headerValue) => {
     let str = '';
     console.log('头像:',headerValue);
